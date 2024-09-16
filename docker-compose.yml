@@ -1,0 +1,104 @@
+# version: "3.6"
+
+services:
+  license:
+    image: "totvsengpro/license-dev:3.6.1"
+    container_name: protheus_license
+    environment:
+      - TZ=${TIME_ZONE}
+    ports:
+      - "5555:5555"
+  database:
+    build:
+      context: ./mssql
+      dockerfile: ./Dockerfile
+    container_name: protheus_mssql
+    environment:
+      - MSSQL_SA_PASSWORD=${DB_PASS}
+      - MSSQL_DB=${DB_NAME}
+      - ACCEPT_EULA=Y
+      - TZ=${TIME_ZONE}
+    ports:
+      - ${DB_PORT}:1433
+  dbaccess:
+    build:
+      context: ./dbaccess
+      dockerfile: ./Dockerfile
+    container_name: protheus_dbaccess
+    ports:
+      - "${DBACCESS_PORT}:7890"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_TYPE=${DB_TYPE}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - LICENSE_SERVER=${LICENSE_SERVER}
+      - TZ=${TIME_ZONE}
+    depends_on:
+      - database
+      - license
+  appserver:
+    build:
+      context: ./appserver
+      dockerfile: ./Dockerfile
+      args:
+        - PROTHEUS_INI=${PROTHEUS_INI_MAIN}
+
+    container_name: protheus_appserver
+    volumes:
+      - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
+      - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+    ports:
+      - "9999:9999"
+    environment:
+      - LICENSE_SERVER=${LICENSE_SERVER}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}
+      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
+      - DBACCESS_PORT=${DBACCESS_PORT}
+      - TZ=${TIME_ZONE}
+    depends_on:
+      - dbaccess
+  appserver-rest:
+    build:
+      context: ./appserver
+      dockerfile: ./Dockerfile
+      args:
+        - PROTHEUS_INI=${PROTHEUS_INI_REST}
+    container_name: protheus_rest
+    volumes:
+      - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
+      - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+    ports:
+      - "9998:9998"
+      - "3003:3003"
+    environment:
+      - LICENSE_SERVER=${LICENSE_SERVER}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}
+      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
+      - DBACCESS_PORT=${DBACCESS_PORT}
+      - TZ=${TIME_ZONE}
+    depends_on:
+      - dbaccess
+  appserver-ws:
+    build:
+      context: ./appserver
+      dockerfile: ./Dockerfile
+      args:
+        - PROTHEUS_INI=${PROTHEUS_INI_WS}
+    container_name: protheus_ws
+    volumes:
+      - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
+      - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+    ports:
+      - "9997:9997"
+      - "3001:3001"
+    environment:
+      - LICENSE_SERVER=${LICENSE_SERVER}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}
+      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
+      - DBACCESS_PORT=${DBACCESS_PORT}
+      - TZ=${TIME_ZONE}
+    depends_on:
+      - dbaccess
