@@ -72,7 +72,7 @@ services:
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
     ports:
       - "9998:9998"
-      - "3003:3003"
+      - "3000:3000"
     environment:
       - LICENSE_SERVER=${LICENSE_SERVER}
       - DBACCESS_SERVER=${DBACCESS_SERVER}
