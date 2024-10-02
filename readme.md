@@ -6,6 +6,12 @@ O Protheus em ambiente docker não está homologado para uso em ambientes produt
 
 Duvidas consultar a documentação oficial da totvs em: https://docker-protheus.engpro.totvs.com.br
 
+# Requisitos 
+
+- Docker
+
+- Docker Compose
+
 # Ambiente
 
 - Crie uma copia do arquivo env-example com o nome .env
@@ -18,7 +24,7 @@ Duvidas consultar a documentação oficial da totvs em: https://docker-protheus.
 
 # Execucao
 
-docker-compose up -d
+Executar o comando ```docker-compose up -d``` na raiz do projeto.
 
 # Problemas e Soluções
 
