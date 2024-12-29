@@ -18,8 +18,13 @@ services:
       - MSSQL_DB=${DB_NAME}
       - ACCEPT_EULA=Y
       - TZ=${TIME_ZONE}
+    user: root
     ports:
       - ${DB_PORT}:1433
+    volumes:
+      - mssql-data:/var/opt/mssql/data
+      - mssql-log:/var/opt/mssql/log
+      - mssql-secrets:/var/opt/mssql/secrets
   dbaccess:
     build:
       context: ./dbaccess
@@ -102,3 +107,7 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - dbaccess
+volumes:
+  mssql-data:
+  mssql-log:
+  mssql-secrets:
