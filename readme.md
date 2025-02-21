@@ -43,3 +43,17 @@ Solução:
 > caso divergente da versão no docker/totvs-dbaccess-docker/build/odbc.ini corrigir e subir container novamente
 
 -   Problema: Versão de appserver/dbaccess
+
+## Smartview
+
+- Para instalação do smartview é necessario o download no link versão linux [Instalação Smartview TDN](https://tdn.totvs.com.br/pages/releaseview.action?pageId=626636542)
+
+- Renomear o ZIP para smartview.zip e copiar para a pasta /smartview
+
+- Para executar a versão com smartview ```docker-compose -f docker-compose-smartview.yml up -d```
+
+- Outra opção é excluir o docker-compose.yml e renomear o docker-compose-smartview.yml para docker-compose.yml e executar o comando ```docker-compose up -d``` na raiz do projeto.
+
+- Para acessar o smartview, abrir o navegador e digitar o ip:porta informado no .env
+
+- Exemplo: http://127.0.0.1:7190/smartview/
