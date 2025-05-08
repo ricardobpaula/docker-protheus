@@ -99,12 +99,16 @@ services:
     ports:
       - "9997:9997"
       - "3001:3001"
+  smartview:
+    build:
+      context: ./smartview
+      dockerfile: ./Dockerfile
+    container_name: protheus_smartview
     environment:
-      - LICENSE_SERVER=${LICENSE_SERVER}
-      - DBACCESS_SERVER=${DBACCESS_SERVER}
-      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
-      - DBACCESS_PORT=${DBACCESS_PORT}
-      - TZ=${TIME_ZONE}
+      - SMARTVIEW_PORT=${SMARTVIEW_PORT}
+    ports:
+      - "${SMARTVIEW_PORT}:${SMARTVIEW_PORT}"
+      - "${SMARTVIEW_PORT_ADMIN}:${SMARTVIEW_PORT_ADMIN}"
     depends_on:
       - dbaccess
 volumes:
