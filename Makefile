@@ -6,3 +6,6 @@ build:
 
 down:
 	docker-compose down
+
+remove: 
+	docker-compose down -v

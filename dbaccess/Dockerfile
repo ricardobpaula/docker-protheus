@@ -1,4 +1,4 @@
-FROM totvsengpro/dbaccess-postgres-dev:23.1.1.4
+FROM totvsengpro/dbaccess-postgres-dev:24.1.0.2
 
 RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-release.repo \
     && yum -y update \

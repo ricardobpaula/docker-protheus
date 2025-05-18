@@ -2,12 +2,16 @@
 
 services:
   license:
-    image: "ricardobpaula/license-dev:3.6.3_1"
+    build:
+      context: ./license
+      dockerfile: ./Dockerfile
+    #image: totvsengpro/license-dev:3.6.1
     container_name: protheus_license_${RELEASE}
     environment:
       - TZ=${TIME_ZONE}
     ports:
       - "5555:5555"
+      - "53905:53905"
   database:
     build:
       context: ./mssql
