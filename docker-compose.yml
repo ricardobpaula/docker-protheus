@@ -2,16 +2,14 @@
 
 services:
   license:
-    image: "ricardobpaula/license-dev:3.6.3_1"
+    image: "ricardobpaula/license-dev-protheus:2410"
     container_name: protheus_license_${RELEASE}
     environment:
       - TZ=${TIME_ZONE}
     ports:
       - "5555:5555"
   database:
-    build:
-      context: ./mssql
-      dockerfile: ./Dockerfile
+    image: "ricardobpaula/mssql-dev-protheus:2410"
     container_name: protheus_mssql_${RELEASE}
     environment:
       - MSSQL_SA_PASSWORD=${DB_PASS}
@@ -26,9 +24,7 @@ services:
       - mssql-log:/var/opt/mssql/log
       - mssql-secrets:/var/opt/mssql/secrets
   dbaccess:
-    build:
-      context: ./dbaccess
-      dockerfile: ./Dockerfile
+    image: "ricardobpaula/dbaccess-dev-protheus:2410"
     container_name: protheus_dbaccess_${RELEASE}
     ports:
       - "${DBACCESS_PORT}:7890"
@@ -45,16 +41,12 @@ services:
       - database
       - license
   appserver:
-    build:
-      context: ./appserver
-      dockerfile: ./Dockerfile
-      args:
-        - PROTHEUS_INI=${PROTHEUS_INI_MAIN}
-
+    image: "ricardobpaula/appserver-dev-protheus:2410"
     container_name: protheus_appserver_${RELEASE}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+      - "${PROTHEUS_INI_MAIN}/appserver.ini:/opt/totvs/appserver/appserver_bkp.ini"
     ports:
       - "9999:9999"
       - "8080:8080"
@@ -67,15 +59,12 @@ services:
     depends_on:
       - dbaccess
   appserver-rest:
-    build:
-      context: ./appserver
-      dockerfile: ./Dockerfile
-      args:
-        - PROTHEUS_INI=${PROTHEUS_INI_REST}
+    image: "ricardobpaula/appserver-dev-protheus:2410"
     container_name: protheus_rest_${RELEASE}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+      - "${PROTHEUS_INI_REST}/appserver.ini:/opt/totvs/appserver/appserver_bkp.ini"
     ports:
       - "9998:9998"
       - "3000:3000"
@@ -88,9 +77,7 @@ services:
     depends_on:
       - dbaccess
   smartview:
-    build:
-      context: ./smartview
-      dockerfile: ./Dockerfile
+    image: "ricardobpaula/smartview-dev-protheus:2410"
     container_name: protheus_smartview_${RELEASE}
     environment:
       - SMARTVIEW_PORT=${SMARTVIEW_PORT}

@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+cp /opt/totvs/appserver/appserver_bkp.ini /opt/totvs/appserver/appserver.ini
+
 /bin/sed 's/{{DBACCESS_SERVER}}/'"${DBACCESS_SERVER}"'/' -i /opt/totvs/appserver/appserver.ini
 /bin/sed 's/{{DBACCESS_ALIAS}}/'"${DBACCESS_ALIAS}"'/' -i /opt/totvs/appserver/appserver.ini
 /bin/sed 's/{{DBACCESS_PORT}}/'"${DBACCESS_PORT}"'/' -i /opt/totvs/appserver/appserver.ini
