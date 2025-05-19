@@ -51,13 +51,14 @@ services:
     build:
       context: ./appserver
       dockerfile: ./Dockerfile
-      args:
-        - PROTHEUS_INI=${PROTHEUS_INI_MAIN}
+      #args:
+      #  - PROTHEUS_INI=${PROTHEUS_INI_MAIN}
 
     container_name: protheus_appserver_${RELEASE}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+      - "${PROTHEUS_INI_MAIN}/appserver.ini:/opt/totvs/appserver/appserver.ini"
     ports:
       - "9999:9999"
       - "8080:8080"
@@ -73,12 +74,13 @@ services:
     build:
       context: ./appserver
       dockerfile: ./Dockerfile
-      args:
-        - PROTHEUS_INI=${PROTHEUS_INI_REST}
+      #args:
+      #  - PROTHEUS_INI=${PROTHEUS_INI_REST}
     container_name: protheus_rest_${RELEASE}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
+      - "${PROTHEUS_INI_REST}/appserver.ini:/opt/totvs/appserver/appserver.ini"
     ports:
       - "9998:9998"
       - "3000:3000"
