@@ -10,6 +10,12 @@ services:
       - TZ=${TIME_ZONE}
     ports:
       - "5555:5555"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "5555"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
   database:
     build:
       context: ./mssql
@@ -27,6 +33,12 @@ services:
       - mssql-data:/var/opt/mssql/data
       - mssql-log:/var/opt/mssql/log
       - mssql-secrets:/var/opt/mssql/secrets
+    healthcheck:
+      test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P ${DB_PASS} -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
   dbaccess:
     build:
       context: ./dbaccess
@@ -46,6 +58,12 @@ services:
     depends_on:
       - database
       - license
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "7890"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
   appserver:
     build:
       context: ./appserver
@@ -66,6 +84,12 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - dbaccess
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9999"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
   appserver-rest:
     build:
       context: ./appserver
@@ -86,6 +110,12 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - dbaccess
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9998"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
   smartview:
     build:
       context: ./smartview
@@ -98,6 +128,12 @@ services:
       - "${SMARTVIEW_PORT_ADMIN}:${SMARTVIEW_PORT_ADMIN}"
     depends_on:
       - dbaccess
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "${SMARTVIEW_PORT}"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
 volumes:
   mssql-data:
   mssql-log:
