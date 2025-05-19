@@ -9,3 +9,6 @@ down:
 
 remove: 
 	docker-compose down -v
+
+dev:
+	docker-compose -f ./docker-compose-development.yml up -d --build

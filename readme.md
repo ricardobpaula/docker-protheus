@@ -12,19 +12,15 @@ Duvidas consultar a documentação oficial da totvs em: https://docker-protheus.
 
 - Docker Compose
 
-# Ambiente
+# Windows
+
+- Executar o bat ```start_docker.bat``` na raiz do projeto.
+
+# Linux
 
 - Crie uma copia do arquivo env-example com o nome .env
 
-- Crie uma pasta conforme a variavel $PROTHEUS_PATH do .env
-
-- Copia para $PROTHEUS_PATH/apo o rpo padrao com nome tttm120.RPO
-
-- Copia para $PROTHEUS_PATH/protheus_data a pasta protheus_data
-
-# Execucao
-
-Executar o comando ```docker-compose up -d``` na raiz do projeto.
+- Executar o comando ```docker-compose up -d``` na raiz do projeto.
 
 # Problemas e Soluções
 
