@@ -5,7 +5,7 @@ services:
     build:
       context: ./license
       dockerfile: ./Dockerfile
-    container_name: protheus_license_${RELEASE}
+    container_name: protheus_license_${VERSION}
     environment:
       - TZ=${TIME_ZONE}
     ports:
@@ -20,7 +20,7 @@ services:
     build:
       context: ./mssql
       dockerfile: ./Dockerfile
-    container_name: protheus_mssql_${RELEASE}
+    container_name: protheus_mssql
     environment:
       - MSSQL_SA_PASSWORD=${DB_PASS}
       - MSSQL_DB=${DB_NAME}
@@ -43,7 +43,7 @@ services:
     build:
       context: ./dbaccess
       dockerfile: ./Dockerfile
-    container_name: protheus_dbaccess_${RELEASE}
+    container_name: protheus_dbaccess_${VERSION}
     ports:
       - "${DBACCESS_PORT}:7890"
     environment:
@@ -51,9 +51,9 @@ services:
       - DB_PASS=${DB_PASS}
       - DB_TYPE=${DB_TYPE}
       - DB_NAME=${DB_NAME}
-      - DB_HOST=${DB_HOST}_${RELEASE}
+      - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - TZ=${TIME_ZONE}
     depends_on:
       - database
@@ -68,7 +68,7 @@ services:
     build:
       context: ./appserver
       dockerfile: ./Dockerfile
-    container_name: protheus_appserver_${RELEASE}
+    container_name: protheus_appserver_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
@@ -77,8 +77,8 @@ services:
       - "9999:9999"
       - "8080:8080"
     environment:
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
-      - DBACCESS_SERVER=${DBACCESS_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
       - DBACCESS_ALIAS=${DBACCESS_ALIAS}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
@@ -94,7 +94,7 @@ services:
     build:
       context: ./appserver
       dockerfile: ./Dockerfile
-    container_name: protheus_rest_${RELEASE}
+    container_name: protheus_rest_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
@@ -103,8 +103,8 @@ services:
       - "9998:9998"
       - "3000:3000"
     environment:
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
-      - DBACCESS_SERVER=${DBACCESS_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
       - DBACCESS_ALIAS=${DBACCESS_ALIAS}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
@@ -120,7 +120,7 @@ services:
     build:
       context: ./smartview
       dockerfile: ./Dockerfile
-    container_name: protheus_smartview_${RELEASE}
+    container_name: protheus_smartview_${VERSION}
     environment:
       - SMARTVIEW_PORT=${SMARTVIEW_PORT}
     ports:

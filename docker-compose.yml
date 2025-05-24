@@ -2,8 +2,8 @@
 
 services:
   license:
-    image: "ricardobpaula/license-dev-protheus:2410"
-    container_name: protheus_license_${RELEASE}
+    image: "ricardobpaula/license-dev-protheus:${RELEASE}"
+    container_name: protheus_license_${VERSION}
     environment:
       - TZ=${TIME_ZONE}
     ports:
@@ -15,8 +15,8 @@ services:
       retries: 3
       start_period: 10s
   database:
-    image: "ricardobpaula/mssql-dev-protheus:2410"
-    container_name: protheus_mssql_${RELEASE}
+    image: "ricardobpaula/mssql-dev-protheus:latest"
+    container_name: protheus_mssql
     environment:
       - MSSQL_SA_PASSWORD=${DB_PASS}
       - MSSQL_DB=${DB_NAME}
@@ -36,8 +36,8 @@ services:
       retries: 3
       start_period: 30s
   dbaccess:
-    image: "ricardobpaula/dbaccess-dev-protheus:2410"
-    container_name: protheus_dbaccess_${RELEASE}
+    image: "ricardobpaula/dbaccess-dev-protheus:${RELEASE}"
+    container_name: protheus_dbaccess_${VERSION}
     ports:
       - "${DBACCESS_PORT}:7890"
     environment:
@@ -45,9 +45,9 @@ services:
       - DB_PASS=${DB_PASS}
       - DB_TYPE=${DB_TYPE}
       - DB_NAME=${DB_NAME}
-      - DB_HOST=${DB_HOST}_${RELEASE}
+      - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - TZ=${TIME_ZONE}
     depends_on:
       - database
@@ -59,8 +59,8 @@ services:
       retries: 3
       start_period: 10s
   appserver:
-    image: "ricardobpaula/appserver-dev-protheus:2410"
-    container_name: protheus_appserver_${RELEASE}
+    image: "ricardobpaula/appserver-dev-protheus:${RELEASE}"
+    container_name: protheus_appserver_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
@@ -69,8 +69,8 @@ services:
       - "9999:9999"
       - "8080:8080"
     environment:
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
-      - DBACCESS_SERVER=${DBACCESS_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
       - DBACCESS_ALIAS=${DBACCESS_ALIAS}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
@@ -83,8 +83,8 @@ services:
       retries: 3
       start_period: 10s
   appserver-rest:
-    image: "ricardobpaula/appserver-dev-protheus:2410"
-    container_name: protheus_rest_${RELEASE}
+    image: "ricardobpaula/appserver-dev-protheus:${RELEASE}"
+    container_name: protheus_rest_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
@@ -93,8 +93,8 @@ services:
       - "9998:9998"
       - "3000:3000"
     environment:
-      - LICENSE_SERVER=${LICENSE_SERVER}_${RELEASE}
-      - DBACCESS_SERVER=${DBACCESS_SERVER}_${RELEASE}
+      - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
+      - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
       - DBACCESS_ALIAS=${DBACCESS_ALIAS}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
@@ -107,8 +107,8 @@ services:
       retries: 3
       start_period: 10s
   smartview:
-    image: "ricardobpaula/smartview-dev-protheus:2410"
-    container_name: protheus_smartview_${RELEASE}
+    image: "ricardobpaula/smartview-dev-protheus:${RELEASE}"
+    container_name: protheus_smartview_${VERSION}
     environment:
       - SMARTVIEW_PORT=${SMARTVIEW_PORT}
     ports:
