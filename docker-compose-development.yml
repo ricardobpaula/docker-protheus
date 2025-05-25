@@ -79,7 +79,7 @@ services:
     environment:
       - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
-      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
+      - DBACCESS_ALIAS=${DB_NAME}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
     depends_on:
@@ -105,7 +105,7 @@ services:
     environment:
       - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
-      - DBACCESS_ALIAS=${DBACCESS_ALIAS}
+      - DBACCESS_ALIAS=${DB_NAME}
       - DBACCESS_PORT=${DBACCESS_PORT}
       - TZ=${TIME_ZONE}
     depends_on:
