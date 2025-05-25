@@ -1,15 +1,17 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo Verificando arquivo .env...
+set ENV_FILE=.env
 
-if not exist .env (
-    echo Arquivo .env nao encontrado.
-    echo Criando arquivo .env baseado no example.env...
+echo Verificando arquivo %ENV_FILE%...
+
+if not exist %ENV_FILE% (
+    echo Arquivo %ENV_FILE% nao encontrado.
+    echo Criando arquivo %ENV_FILE% baseado no example.env...
     
     if exist example.env (
-        copy example.env .env
-        echo Arquivo .env criado com sucesso!
+        copy example.env %ENV_FILE%
+        echo Arquivo %ENV_FILE% criado com sucesso!
     ) else (
         echo ERRO: Arquivo example.env nao encontrado!
         pause
