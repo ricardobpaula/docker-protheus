@@ -26,7 +26,7 @@ set /p resposta=
 if /i "%resposta%"=="S" (
     echo.
     echo Iniciando containers...
-    docker-compose up -d --build
+    docker-compose --env-file %ENV_FILE% up -d --build
     echo.
     echo Containers iniciados!
 ) else (
