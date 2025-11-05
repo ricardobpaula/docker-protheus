@@ -40,16 +40,27 @@ Solução:
 
 -   Problema: Versão de appserver/dbaccess
 
-## Smartview
+## Plataformas MacOs/ARM
 
-- Para instalação do smartview é necessario o download no link versão linux [Instalação Smartview TDN](https://tdn.totvs.com.br/pages/releaseview.action?pageId=626636542)
+- Incluir o docker-compose.override.yml
 
-- Renomear o ZIP para smartview.zip e copiar para a pasta /smartview
+```
+services:
+  license:
+    platform: linux/amd64
 
-- Para executar a versão com smartview ```docker-compose -f docker-compose-smartview.yml up -d```
+  database:
+    platform: linux/amd64
 
-- Outra opção é excluir o docker-compose.yml e renomear o docker-compose-smartview.yml para docker-compose.yml e executar o comando ```docker-compose up -d``` na raiz do projeto.
+  dbaccess:
+    platform: linux/amd64
 
-- Para acessar o smartview, abrir o navegador e digitar o ip:porta informado no .env
+  appserver:
+    platform: linux/amd64
 
-- Exemplo: http://127.0.0.1:7190/smartview/
+  appserver-rest:
+    platform: linux/amd64
+
+  smartview:
+    platform: linux/amd64 
+```
