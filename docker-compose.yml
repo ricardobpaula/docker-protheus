@@ -68,7 +68,6 @@ services:
     ports:
       - "9999:9999"
       - "8080:8080"
-      - "21021:21021"
     environment:
       - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
