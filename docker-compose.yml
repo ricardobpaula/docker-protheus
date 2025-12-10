@@ -2,7 +2,8 @@
 
 services:
   license:
-    image: "ricardobpaula/license-dev-protheus:${RELEASE}"
+    #image: "ricardobpaula/license-dev-protheus:${RELEASE}"
+    image: "totvsengpro/license-dev:3.7.0"
     container_name: protheus_license_${VERSION}
     environment:
       - TZ=${TIME_ZONE}
