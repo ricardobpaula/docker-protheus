@@ -9,6 +9,8 @@ services:
       - TZ=${TIME_ZONE}
     ports:
       - "5555:5555"
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "5555"]
       interval: 10s
@@ -30,6 +32,8 @@ services:
       - mssql-data:/var/opt/mssql/data
       - mssql-log:/var/opt/mssql/log
       - mssql-secrets:/var/opt/mssql/secrets
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P ${DB_PASS} -Q 'SELECT 1' || exit 1"]
       interval: 10s
@@ -53,6 +57,8 @@ services:
     depends_on:
       - database
       - license
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "7890"]
       interval: 10s
@@ -77,6 +83,8 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - dbaccess
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "9999"]
       interval: 10s
@@ -93,6 +101,7 @@ services:
     ports:
       - "9998:9998"
       - "3000:3000"
+      - "8081:8081"
     environment:
       - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - DBACCESS_SERVER=${DBACCESS_SERVER}_${VERSION}
@@ -101,6 +110,8 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - dbaccess
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "9998"]
       interval: 10s
@@ -117,12 +128,17 @@ services:
       - "${SMARTVIEW_PORT_ADMIN}:${SMARTVIEW_PORT_ADMIN}"
     depends_on:
       - dbaccess
+    networks:
+      - protheus_net
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "${SMARTVIEW_PORT}"]
       interval: 10s
       timeout: 3s
       retries: 3
       start_period: 10s
+networks:
+  protheus_net:
+    driver: bridge
 volumes:
   mssql-data:
   mssql-log:
