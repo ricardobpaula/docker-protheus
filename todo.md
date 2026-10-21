@@ -1,12 +1,12 @@
 # Lista de pendencias
 
-- [X] License
+- [ ] License
 
-- [X] Protheus Data
+- [ ] Protheus Data
 
-- [X] RPO
+- [ ] RPO
 
-- [X] MSSQL
+- [ ] MSSQL
 
 - [] Appserver
 

@@ -116,24 +116,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 10s
-  smartview:
-    build:
-      context: ./smartview
-      dockerfile: ./Dockerfile
-    container_name: protheus_smartview_${VERSION}
-    environment:
-      - SMARTVIEW_PORT=${SMARTVIEW_PORT}
-    ports:
-      - "${SMARTVIEW_PORT}:${SMARTVIEW_PORT}"
-      - "${SMARTVIEW_PORT_ADMIN}:${SMARTVIEW_PORT_ADMIN}"
-    depends_on:
-      - dbaccess
-    healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "${SMARTVIEW_PORT}"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
 volumes:
   mssql-data:
   mssql-log:

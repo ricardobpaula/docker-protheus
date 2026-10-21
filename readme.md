@@ -60,7 +60,4 @@ services:
 
   appserver-rest:
     platform: linux/amd64
-
-  smartview:
-    platform: linux/amd64 
 ```
