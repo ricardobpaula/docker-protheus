@@ -2,8 +2,7 @@
 
 services:
   license:
-    #image: "ricardobpaula/license-dev-protheus:${RELEASE}"
-    image: "totvsengpro/license-dev:3.7.0"
+    image: "ricardobpaula/license-dev-protheus:latest"
     container_name: protheus_license_${VERSION}
     environment:
       - TZ=${TIME_ZONE}
@@ -41,7 +40,7 @@ services:
       retries: 3
       start_period: 30s
   dbaccess:
-    image: "ricardobpaula/dbaccess-dev-protheus:${RELEASE}"
+    image: "ricardobpaula/dbaccess-dev-protheus:latest"
     container_name: protheus_dbaccess_${VERSION}
     ports:
       - "${DBACCESS_PORT}:7890"
@@ -68,7 +67,7 @@ services:
       retries: 3
       start_period: 10s
   appserver:
-    image: "ricardobpaula/appserver-dev-protheus:${RELEASE}"
+    image: "ricardobpaula/appserver-dev-protheus:latest"
     container_name: protheus_appserver_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
@@ -94,7 +93,7 @@ services:
       retries: 3
       start_period: 10s
   appserver-rest:
-    image: "ricardobpaula/appserver-dev-protheus:${RELEASE}"
+    image: "ricardobpaula/appserver-dev-protheus:latest"
     container_name: protheus_rest_${VERSION}
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
