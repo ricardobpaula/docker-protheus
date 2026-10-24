@@ -35,7 +35,7 @@ services:
     networks:
       - protheus_net
     healthcheck:
-      test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P ${DB_PASS} -Q 'SELECT 1' || exit 1"]
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P ${DB_PASS} -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 3s
       retries: 3
@@ -55,8 +55,10 @@ services:
       - LICENSE_SERVER=${LICENSE_SERVER}_${VERSION}
       - TZ=${TIME_ZONE}
     depends_on:
-      - database
-      - license
+      database:
+        condition: service_healthy
+      license:
+        condition: service_healthy
     networks:
       - protheus_net
     healthcheck:

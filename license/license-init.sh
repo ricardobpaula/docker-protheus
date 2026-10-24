@@ -1,3 +1,4 @@
 #!/bin/bash
-# Use a variável de ambiente PORT
+cp /totvs/totvslicensevirtual/licenseserver_bkp.ini /totvs/totvslicensevirtual/bin/appserver/licenseserver.ini
+
 exec /totvs/totvslicensevirtual/bin/appserver/appsrvlinux

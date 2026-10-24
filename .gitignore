@@ -5,3 +5,5 @@ build
 build-*
 docker-compose.override.yml
 logs
+*.tar.gz
+.DS_Store

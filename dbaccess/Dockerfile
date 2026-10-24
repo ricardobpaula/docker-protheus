@@ -1,14 +1,14 @@
 FROM oraclelinux:9 AS builder
 
 RUN yum update -y && \
-    yum install -y unzip && \
+    yum install -y tar gzip && \
     yum clean all
 
-ADD dbaccess.zip /tmp/dbaccess.zip
+COPY dbaccess.tar.gz /tmp/dbaccess.tar.gz
 
 RUN mkdir -p /opt/totvs/dbaccess && \
-    unzip /tmp/dbaccess.zip -d /opt/totvs/dbaccess && \
-    rm /tmp/dbaccess.zip && \
+    tar -xzf /tmp/dbaccess.tar.gz -C /opt/totvs/dbaccess && \
+    rm /tmp/dbaccess.tar.gz && \
     chmod -R 755 /opt/totvs/dbaccess
 
 #FROM oraclelinux:9
@@ -17,10 +17,14 @@ RUN curl https://packages.microsoft.com/config/rhel/9/prod.repo > /etc/yum.repos
     && yum -y update \
     && yum -y install \
     wget \
+    nmap-ncat \
     unixODBC \
     && ACCEPT_EULA=Y yum install -y msodbcsql18 \
     && rm -rf /var/cache/yum/* \
     && yum clean all
+
+# O DBAccess carrega /usr/lib64/libodbc.so, que so existe no unixODBC-devel
+RUN ln -sf /usr/lib64/libodbc.so.2 /usr/lib64/libodbc.so
 
 #COPY --from=builder /opt/totvs/dbaccess /opt/totvs/dbaccess
 

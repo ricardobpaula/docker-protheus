@@ -1,14 +1,16 @@
 FROM oraclelinux:9 AS appserver-builder
 
 RUN yum update -y && \
-    yum install -y unzip && \
+    yum install -y tar gzip unzip && \
     yum clean all
 
-ADD appserver.zip /tmp/appserver.zip
+COPY appserver.tar.gz /tmp/appserver.tar.gz
+COPY webapp.zip /tmp/webapp.zip
 
 RUN mkdir -p /opt/totvs/appserver && \
-    unzip /tmp/appserver.zip -d /opt/totvs/appserver && \
-    rm /tmp/appserver.zip && \
+    tar -xzf /tmp/appserver.tar.gz -C /opt/totvs/appserver && \
+    unzip -o /tmp/webapp.zip -x '__MACOSX/*' -d /opt/totvs/appserver && \
+    rm /tmp/appserver.tar.gz /tmp/webapp.zip && \
     chmod -R 755 /opt/totvs/appserver
 
 FROM oraclelinux:9 AS protheus-builder
@@ -27,7 +29,7 @@ RUN mkdir -p /opt/totvs/protheus_bkp && \
 FROM oraclelinux:9
 
 RUN yum update -y && \
-    yum install -y libicu libstdc++ glibc && \
+    yum install -y libicu libstdc++ glibc nmap-ncat && \
     yum clean all
 
 COPY --from=appserver-builder /opt/totvs/appserver /opt/totvs/appserver
