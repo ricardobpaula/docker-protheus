@@ -12,7 +12,10 @@ set -e
   -p ${DB_PASS} \
   -d ${DB_TYPE} \
   -a ${DB_NAME} \
-  -o "clientlibrary=/usr/lib64/libodbc.so" \
-  -g "LicenseServer=${LICENSE_SERVER};LicensePort=5555;ByYouProc=0;ODBC30=1"
+  -c '/usr/lib64/libodbc.so' \
+  -g "LicenseServer=${LICENSE_SERVER};LicensePort=5555"
+
+sed -e 's/!/=/g' -e 's/@/;/g' dbaccess.ini > dbaccess2.ini
+mv -f dbaccess2.ini dbaccess.ini
 
 exec "/opt/totvs/dbaccess/multi/dbaccess64"

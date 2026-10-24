@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 REM Configurações
 set USERNAME=ricardobpaula
-set FOLDERS=appserver dbaccess mssql license smartview
+set FOLDERS=appserver dbaccess mssql license
 
 REM Verifica versao
 if "%1"=="" (
