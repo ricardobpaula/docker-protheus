@@ -14,7 +14,7 @@ RUN unzip /protheus/protheus.zip -d /protheus/ && \
     rm /protheus/protheus.zip && \
     chmod -R 777 /protheus
 
-FROM totvsengpro/appserver-dev:24.3.0.5
+FROM totvsengpro/appserver-dev:24.3.1.1
 
 ARG PROTHEUS_INI
 
