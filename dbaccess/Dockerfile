@@ -12,5 +12,6 @@ RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos
 
 COPY ./odbc.ini /etc/odbc.ini
 COPY ./dbaccess-init.sh /usr/local/bin/dbaccess-init.sh
+RUN chmod +x /usr/local/bin/dbaccess-init.sh
 
 ENTRYPOINT [ "/usr/local/bin/dbaccess-init.sh" ]

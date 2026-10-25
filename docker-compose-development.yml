@@ -67,6 +67,7 @@ services:
       context: ./appserver
       dockerfile: ./Dockerfile
     container_name: protheus_appserver_${VERSION}
+    init: true
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"
@@ -93,6 +94,7 @@ services:
       context: ./appserver
       dockerfile: ./Dockerfile
     container_name: protheus_rest_${VERSION}
+    init: true
     volumes:
       - "${PROTHEUS_PATH}/protheus_data/:/opt/totvs/protheus/protheus_data/"
       - "${PROTHEUS_PATH}/apo/:/opt/totvs/protheus/apo/"

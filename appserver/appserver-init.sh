@@ -8,6 +8,12 @@ cp /opt/totvs/appserver/appserver_bkp.ini /opt/totvs/appserver/appserver.ini
 /bin/sed 's/{{DBACCESS_PORT}}/'"${DBACCESS_PORT}"'/' -i /opt/totvs/appserver/appserver.ini
 /bin/sed 's/{{LICENSE_SERVER}}/'"${LICENSE_SERVER}"'/' -i /opt/totvs/appserver/appserver.ini
 
+# Substitui o webapp.so da imagem base pelo fornecido em webapp.zip
+if [ -f /opt/totvs/webapp_bkp/webapp.so ]; then
+    cp -f /opt/totvs/webapp_bkp/webapp.so /opt/totvs/appserver/webapp.so
+    echo "Copiado webapp.so para /opt/totvs/appserver/"
+fi
+
 # Cria a pasta principal
 mkdir -p /opt/totvs/protheus
 
